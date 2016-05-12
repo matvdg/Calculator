@@ -36,12 +36,6 @@ class CalculatorBrain {
             case .Clear :
                 accumulator = 0
                 pending = nil
-            case .Percent :
-                if pending == nil {
-                    accumulator = accumulator / 100
-                } else {
-                    accumulator = accumulator / 100 *  pending!.firstOperand
-                }
             }
         }
     }
@@ -60,7 +54,6 @@ class CalculatorBrain {
         case BinaryOperation((Double, Double) -> Double)
         case Equals
         case Clear
-        case Percent
     }
     
     private var pending: PendingBinaryOperationInfo?
@@ -91,15 +84,15 @@ class CalculatorBrain {
         "tan" : Operation.UnaryOperation(tan),
         "√" : Operation.UnaryOperation(sqrt),
         "±" :Operation.UnaryOperation({-$0}),
+        "%" : Operation.UnaryOperation({$0/100}),
         //Binary operations
         "+" : Operation.BinaryOperation({$0 + $1}),
         "-" : Operation.BinaryOperation({$0 - $1}),
         "×" : Operation.BinaryOperation({$0 * $1}),
         "÷" : Operation.BinaryOperation({$0 / $1}),
         //Equals
-        "=" : Operation.Equals,
-        //Percent
-        "%" : Operation.Percent
+        "=" : Operation.Equals
+        
     ]
     
     typealias PropertyList = AnyObject
