@@ -19,6 +19,39 @@ class CalculatorBrain {
         internalProgram.append(operand)
     }
     
+    private enum Operation {
+        case Constant(Double)
+        case UnaryOperation((Double) -> Double)
+        case BinaryOperation((Double, Double) -> Double)
+        case Equals
+        case Clear
+        case Percent
+    }
+    
+    private var operations = [
+        //Constants
+        "π" : Operation.Constant(M_PI),
+        "e" : Operation.Constant(M_E),
+        //Clear
+        "C" : Operation.Clear,
+        //Unary operations
+        "cos" : Operation.UnaryOperation(cos),
+        "sin" : Operation.UnaryOperation(sin),
+        "tan" : Operation.UnaryOperation(tan),
+        "√" : Operation.UnaryOperation(sqrt),
+        "±" :Operation.UnaryOperation({-$0}),
+        
+        //Binary operations
+        "+" : Operation.BinaryOperation({$0 + $1}),
+        "-" : Operation.BinaryOperation({$0 - $1}),
+        "×" : Operation.BinaryOperation({$0 * $1}),
+        "÷" : Operation.BinaryOperation({$0 / $1}),
+        //Equals
+        "=" : Operation.Equals,
+        //Percent
+        "%" : Operation.Percent
+    ]
+    
     func performOperation(symbol: String){
         internalProgram.append(symbol)
         if let operation = operations[symbol] {
@@ -36,6 +69,12 @@ class CalculatorBrain {
             case .Clear :
                 accumulator = 0
                 pending = nil
+            case .Percent :
+                if let p = pending {
+                    accumulator = p.firstOperand / 100 * accumulator
+                } else {
+                    accumulator = accumulator / 100
+                }
             }
         }
     }
@@ -46,14 +85,6 @@ class CalculatorBrain {
     
     var history: String {
         return lastOperation
-    }
-    
-    private enum Operation {
-        case Constant(Double)
-        case UnaryOperation((Double) -> Double)
-        case BinaryOperation((Double, Double) -> Double)
-        case Equals
-        case Clear
     }
     
     private var pending: PendingBinaryOperationInfo?
@@ -71,29 +102,7 @@ class CalculatorBrain {
             pending = nil
         }
     }
-    
-    private var operations = [
-        //Constants
-        "π" : Operation.Constant(M_PI),
-        "e" : Operation.Constant(M_E),
-        //Clear
-        "C" : Operation.Clear,
-        //Unary operations
-        "cos" : Operation.UnaryOperation(cos),
-        "sin" : Operation.UnaryOperation(sin),
-        "tan" : Operation.UnaryOperation(tan),
-        "√" : Operation.UnaryOperation(sqrt),
-        "±" :Operation.UnaryOperation({-$0}),
-        "%" : Operation.UnaryOperation({$0/100}),
-        //Binary operations
-        "+" : Operation.BinaryOperation({$0 + $1}),
-        "-" : Operation.BinaryOperation({$0 - $1}),
-        "×" : Operation.BinaryOperation({$0 * $1}),
-        "÷" : Operation.BinaryOperation({$0 / $1}),
-        //Equals
-        "=" : Operation.Equals
-        
-    ]
+
     
     typealias PropertyList = AnyObject
     
