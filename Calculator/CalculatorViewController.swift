@@ -37,7 +37,7 @@ class CalculatorViewController: UIViewController {
             }
         } else {
             self.isInTheMiddleOfTyping = true
-            self.historyScreen.text! = ""
+            self.historyScreen.text! = " "
             self.screen.text! = sender.currentTitle!
         }
     }

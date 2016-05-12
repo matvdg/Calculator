@@ -11,12 +11,14 @@ import Foundation
 class CalculatorBrain {
     
     private var accumulator = 0.0
-    private var lastOperation = ""
     private var internalProgram = [AnyObject]()
+    private var description = " "
+    private var isPartialResult = false
     
     func setOperand(operand: Double){
         accumulator = operand
         internalProgram.append(operand)
+        description += (String(operand))
     }
     
     private enum Operation {
@@ -26,6 +28,7 @@ class CalculatorBrain {
         case Equals
         case Clear
         case Percent
+        case Random
     }
     
     private var operations = [
@@ -46,16 +49,18 @@ class CalculatorBrain {
         "-" : Operation.BinaryOperation({$0 - $1}),
         "×" : Operation.BinaryOperation({$0 * $1}),
         "÷" : Operation.BinaryOperation({$0 / $1}),
+        "≡" : Operation.BinaryOperation({$0 % $1}),
         //Equals
         "=" : Operation.Equals,
         //Percent
-        "%" : Operation.Percent
+        "%" : Operation.Percent,
+        //Random
+        "rand" : Operation.Random
     ]
     
     func performOperation(symbol: String){
         internalProgram.append(symbol)
         if let operation = operations[symbol] {
-            lastOperation = ""
             switch operation {
             case .Constant(let value):
                 accumulator = value
@@ -63,20 +68,28 @@ class CalculatorBrain {
                 accumulator = function(accumulator)
             case .BinaryOperation(let function):
                 executePendingBinaryOperation()
+                isPartialResult = true
                 pending = PendingBinaryOperationInfo(binaryFunction: function, firstOperand: accumulator, symbol: symbol)
             case .Equals:
                 executePendingBinaryOperation()
             case .Clear :
                 accumulator = 0
                 pending = nil
+                description = " "
             case .Percent :
                 if let p = pending {
                     accumulator = p.firstOperand / 100 * accumulator
                 } else {
                     accumulator = accumulator / 100
                 }
+            case .Random :
+                accumulator = generateRandomNumber()
             }
         }
+    }
+    
+    private func generateRandomNumber() -> Double {
+        return Double(Float(arc4random()) / Float(UINT32_MAX))
     }
     
     var result: Double {
@@ -84,7 +97,8 @@ class CalculatorBrain {
     }
     
     var history: String {
-        return lastOperation
+        //lastOperation = "\(pending!.firstOperand) \(pending!.symbol) \(accumulator) = "
+        return description
     }
     
     private var pending: PendingBinaryOperationInfo?
@@ -97,9 +111,9 @@ class CalculatorBrain {
     
     private func executePendingBinaryOperation() {
         if pending != nil {
-            lastOperation = "\(pending!.firstOperand) \(pending!.symbol) \(accumulator) = "
             accumulator = pending!.binaryFunction(pending!.firstOperand,accumulator)
             pending = nil
+            isPartialResult = false
         }
     }
 
@@ -110,9 +124,9 @@ class CalculatorBrain {
         get {
             return internalProgram
         }
-        set {
+        set (new) {
             clear()
-            if let arrayOfOps = newValue as? [AnyObject] {
+            if let arrayOfOps = new as? [AnyObject] {
                 for op in arrayOfOps {
                     if let symbol = op as? String {
                         performOperation(symbol)
