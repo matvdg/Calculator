@@ -36,8 +36,10 @@ class CalculatorViewController: UIViewController {
                 self.screen.text! += sender.currentTitle!
             }
         } else {
+            if self.historyScreen.text!.containsString("=") {
+                self.historyScreen.text = " "
+            }
             self.isInTheMiddleOfTyping = true
-            self.historyScreen.text! = " "
             self.screen.text! = sender.currentTitle!
         }
     }
@@ -51,7 +53,15 @@ class CalculatorViewController: UIViewController {
         if let mathematicalSymbol = sender.currentTitle {
             self.brain.performOperation(mathematicalSymbol)
             self.screenValue = self.brain.result
-            self.historyScreen.text = self.brain.history
+            if self.brain.isPartialResult {
+                 self.historyScreen.text = self.brain.description + " ... "
+            } else {
+                if self.brain.description != " " {
+                    self.historyScreen.text = self.brain.description + " = "
+                } else {
+                    self.historyScreen.text = " "
+                }
+            }
         }
     }
     

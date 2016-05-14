@@ -231,7 +231,7 @@
                                                         <rect key="frame" x="116" y="0.0" width="116" height="81"/>
                                                         <color key="backgroundColor" red="0.85098039219999999" green="0.85098039219999999" blue="0.85098039219999999" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="system" weight="thin" pointSize="30"/>
-                                                        <state key="normal" title="±">
+                                                        <state key="normal" title="(-)">
                                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
                                                     </button>
