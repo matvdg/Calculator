@@ -117,6 +117,7 @@
 				F61101101CD7E4E200A04E2C /* Sources */,
 				F61101111CD7E4E200A04E2C /* Frameworks */,
 				F61101121CD7E4E200A04E2C /* Resources */,
+				F697543E1CE6C2AC00779B71 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -203,6 +204,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F697543E1CE6C2AC00779B71 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Auto Increment Version Script\nbuildPlist=${INFOPLIST_FILE}\nCFBundleVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" $buildPlist)\nCFBundleVersion=$(($CFBundleVersion + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $CFBundleVersion\" $buildPlist";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F61101101CD7E4E200A04E2C /* Sources */ = {
