@@ -14,6 +14,7 @@
 		F61101221CD7E4E200A04E2C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F61101201CD7E4E200A04E2C /* LaunchScreen.storyboard */; };
 		F611012D1CD7E4E200A04E2C /* CalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F611012C1CD7E4E200A04E2C /* CalculatorTests.swift */; };
 		F63D9D841CD7F50500BE9FD3 /* CalculatorBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63D9D831CD7F50500BE9FD3 /* CalculatorBrain.swift */; };
+		F69EF3BB1CEA4923001BD4E5 /* NumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69EF3BA1CEA4923001BD4E5 /* NumberFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,7 @@
 		F611012C1CD7E4E200A04E2C /* CalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorTests.swift; sourceTree = "<group>"; };
 		F611012E1CD7E4E200A04E2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F63D9D831CD7F50500BE9FD3 /* CalculatorBrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatorBrain.swift; sourceTree = "<group>"; };
+		F69EF3BA1CEA4923001BD4E5 /* NumberFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			children = (
 				F61101371CD7E4F200A04E2C /* Supporting files */,
 				F61101191CD7E4E200A04E2C /* CalculatorViewController.swift */,
+				F69EF3BA1CEA4923001BD4E5 /* NumberFormatter.swift */,
 				F63D9D831CD7F50500BE9FD3 /* CalculatorBrain.swift */,
 				F611011B1CD7E4E200A04E2C /* Main.storyboard */,
 				F611011E1CD7E4E200A04E2C /* Assets.xcassets */,
@@ -227,6 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F63D9D841CD7F50500BE9FD3 /* CalculatorBrain.swift in Sources */,
+				F69EF3BB1CEA4923001BD4E5 /* NumberFormatter.swift in Sources */,
 				F611011A1CD7E4E200A04E2C /* CalculatorViewController.swift in Sources */,
 				F61101181CD7E4E200A04E2C /* AppDelegate.swift in Sources */,
 			);

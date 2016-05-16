@@ -14,15 +14,18 @@ class CalculatorViewController: UIViewController {
     
     private var brain = CalculatorBrain()
     
-    private var screenValue: Double {
+    private var screenValue: Double? {
         get {
-            return Double(self.screen.text!)!
+            return Double(self.screen.text!)
         }
-        set {
-            self.screen.text! = String(newValue)
+        set (new){
+            if let newValue = new {
+                self.screen.text! = newValue.stringFromDouble
+            } else {
+                self.screen.text! = " "
+            }
         }
     }
-    
     @IBOutlet weak private var screen: UILabel!
     @IBOutlet weak var historyScreen: UILabel!
     
@@ -47,7 +50,7 @@ class CalculatorViewController: UIViewController {
     
     @IBAction private func performOperation(sender: UIButton) {
         if self.isInTheMiddleOfTyping {
-            self.brain.setOperand(self.screenValue)
+            self.brain.setOperand(self.screenValue!)
             self.isInTheMiddleOfTyping = false
         }
         if let mathematicalSymbol = sender.currentTitle {

@@ -82,14 +82,15 @@ class CalculatorBrain {
     ]
     
     private func formatDescription(input: String) {
+        let accumulatorString = accumulator.stringFromDouble
         if isPartialResult {
             if let operation = operations[input] {
                 switch operation {
                 case .UnaryOperation:
                     if input == "(-)" {
-                        internalDescription += " -(\(accumulator)) "
+                        internalDescription += " -(\(accumulatorString)) "
                     } else {
-                        internalDescription += " \(input)(\(accumulator)) "
+                        internalDescription += " \(input)(\(accumulatorString)) "
                     }
                     pending!.secondOperand = true
                 case .Constant:
@@ -97,13 +98,13 @@ class CalculatorBrain {
                     pending!.secondOperand = true
                 case .BinaryOperation:
                     if isFactorization(input) {
-                        internalDescription = "(\(internalDescription) \(accumulator) ) \(input) "
+                        internalDescription = "(\(internalDescription) \(accumulatorString) ) \(input) "
                     } else {
-                        internalDescription += " \(accumulator) \(input) "
+                        internalDescription += " \(accumulatorString) \(input) "
                     }
                 case .Equals:
                     if !pending!.secondOperand {
-                        internalDescription += " \(accumulator) "
+                        internalDescription += " \(accumulatorString) "
                     }
                     newOperand = false
                 default :
@@ -117,7 +118,7 @@ class CalculatorBrain {
                     internalDescription += input
                 case .UnaryOperation:
                     if internalDescription == " " {
-                        internalDescription = String(accumulator)
+                        internalDescription = accumulatorString
                     }
                     if input == "(-)" {
                         internalDescription = " -(\(internalDescription)) "
@@ -127,10 +128,10 @@ class CalculatorBrain {
                     pending?.secondOperand = true
                 case .BinaryOperation:
                     if internalDescription == " " {
-                        internalDescription += " \(accumulator) \(input) "
+                        internalDescription += accumulatorString + " \(input) "
                     } else {
                         if newOperand {
-                            internalDescription = " \(accumulator) \(input) "
+                            internalDescription = accumulatorString + " \(input) "
                         } else {
                             if isFactorization(input) {
                                 internalDescription = "(\(internalDescription)) \(input) "
