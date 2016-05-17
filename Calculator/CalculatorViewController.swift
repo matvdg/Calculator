@@ -14,6 +14,8 @@ class CalculatorViewController: UIViewController {
     
     private var brain = CalculatorBrain()
     
+    private var savedProgram: CalculatorBrain.PropertyList?
+    
     private var screenValue: Double? {
         get {
             return Double(self.screen.text!)
@@ -27,7 +29,7 @@ class CalculatorViewController: UIViewController {
         }
     }
     @IBOutlet weak private var screen: UILabel!
-    @IBOutlet weak var historyScreen: UILabel!
+    @IBOutlet weak private var historyScreen: UILabel!
     
     @IBAction private func touchDigit(sender: UIButton) {
         if self.isInTheMiddleOfTyping {
@@ -68,23 +70,30 @@ class CalculatorViewController: UIViewController {
         }
     }
     
-    
-    var savedProgram: CalculatorBrain.PropertyList?
     @IBAction private func save() {
         savedProgram = brain.program
     }
     
-    @IBAction func restore() {
+    @IBAction private func restore() {
         if let backup = savedProgram {
             brain.program = backup
             screenValue = brain.result
         }
     }
     
-    @IBAction func clearMemory() {
+    @IBAction private func clearMemory() {
         savedProgram = nil
     }
     
+    @IBAction private func swipeLeft(sender: UISwipeGestureRecognizer) {
+        if screen.text! != "0" {
+            screen.text! = String(screen.text!.characters.dropLast())
+        }
+        if screen.text!.characters.isEmpty {
+            screen.text! = "0"
+            isInTheMiddleOfTyping = false
+        }
+    }
     
 }
 
